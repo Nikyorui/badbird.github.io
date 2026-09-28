@@ -3,28 +3,90 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Моя музыка</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Poop</title>
+
+  <style>
+    html, body {
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: black;
+      font-family: Arial, sans-serif;
+    }
+
+    #poopButton {
+      width: 80vmin;
+      height: 80vmin;
+
+      border: none;
+      border-radius: 50%;
+
+      background: red;
+      color: white;
+
+      font-size: 15vmin;
+      font-weight: bold;
+
+      cursor: pointer;
+
+      transition: transform 1s ease;
+    }
+
+    #poopButton:active {
+      transform: scale(0.98);
+    }
+
+    #poopButton.started {
+      transform: scale(1.25);
+      cursor: default;
+    }
+  </style>
 </head>
 
 <body>
 
-  <button id="playButton">▶ ВКЛЮЧИТЬ МУЗЫКУ</button>
+  <button id="poopButton">Poop</button>
 
   <audio id="music" src="mus.mp3"></audio>
 
   <script>
-    const button = document.getElementById("playButton");
+    const button = document.getElementById("poopButton");
     const music = document.getElementById("music");
 
-    button.addEventListener("click", function () {
-      if (music.paused) {
-        music.play();
-        button.textContent = "⏸ ОСТАНОВИТЬ";
-      } else {
-        music.pause();
-        button.textContent = "▶ ВКЛЮЧИТЬ МУЗЫКУ";
+    button.addEventListener("click", async function () {
+
+      // Если музыка уже запускалась — ничего не делаем
+      if (!music.paused) {
+        return;
       }
+
+      try {
+        await music.play();
+
+        // Увеличиваем кнопку
+        button.classList.add("started");
+
+        // Убираем возможность повторного нажатия
+        button.disabled = true;
+
+      } catch (error) {
+        console.error("Ошибка запуска музыки:", error);
+      }
+    });
+
+    // Не позволяем кнопке остановить музыку
+    music.addEventListener("ended", function () {
+      // Если хочешь, чтобы музыка после окончания
+      // автоматически начиналась заново:
+      music.currentTime = 0;
+      music.play();
     });
   </script>
 
