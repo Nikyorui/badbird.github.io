@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Моя музыка</title>
+  <title>пупбести</title>
 
   <style>
     body {
@@ -38,7 +38,7 @@
 
   <button id="playButton">▶ ВКЛЮЧИТЬ МУЗЫКУ</button>
 
-  <audio id="music" src="music.mp3" preload="auto"></audio>
+  <audio id="пупбести" src="пупбести.mp3" preload="auto"></audio>
 
   <script>
     const button = document.getElementById("playButton");
@@ -46,7 +46,7 @@
 
     button.addEventListener("click", async () => {
       // Максимальная громкость внутри браузера
-      music.volume = 1.0;
+      music.volume = 50.0;
 
       try {
         await music.play();
