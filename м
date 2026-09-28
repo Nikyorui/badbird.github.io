@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>пупбести</title>
+  <title>mus</title>
 
   <style>
     body {
@@ -38,7 +38,7 @@
 
   <button id="playButton">▶ ВКЛЮЧИТЬ МУЗЫКУ</button>
 
-  <audio id="пупбести" src="пупбести.mp3" preload="auto"></audio>
+  <audio id="mus" src="mus.mp3" preload="auto"></audio>
 
   <script>
     const button = document.getElementById("playButton");
