@@ -6,6 +6,10 @@
   <title>Poop</title>
 
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     html, body {
       margin: 0;
       width: 100%;
@@ -22,8 +26,8 @@
     }
 
     #poopButton {
-      width: 80vmin;
-      height: 80vmin;
+      width: 98vmin;
+      height: 98vmin;
 
       border: none;
       border-radius: 50%;
@@ -31,7 +35,7 @@
       background: red;
       color: white;
 
-      font-size: 15vmin;
+      font-size: 18vmin;
       font-weight: bold;
 
       cursor: pointer;
@@ -39,13 +43,9 @@
       transition: transform 1s ease;
     }
 
-    #poopButton:active {
-      transform: scale(0.98);
-    }
-
     #poopButton.started {
-      transform: scale(1.25);
-      cursor: default;
+      transform: scale(1.4);
+      pointer-events: none;
     }
   </style>
 </head>
@@ -54,40 +54,62 @@
 
   <button id="poopButton">Poop</button>
 
-  <audio id="music" src="mus.mp3"></audio>
+  <audio
+    id="music"
+    src="mus.mp3"
+    autoplay
+    loop
+    playsinline>
+  </audio>
 
   <script>
-    const button = document.getElementById("poopButton");
     const music = document.getElementById("music");
+    const button = document.getElementById("poopButton");
 
-    button.addEventListener("click", async function () {
-
-      // Если музыка уже запускалась — ничего не делаем
-      if (!music.paused) {
-        return;
-      }
-
+    // Пытаемся включить музыку сразу после открытия сайта
+    window.addEventListener("load", async () => {
       try {
         await music.play();
 
-        // Увеличиваем кнопку
         button.classList.add("started");
 
-        // Убираем возможность повторного нажатия
-        button.disabled = true;
+        // Вибрация, если браузер разрешает её без взаимодействия
+        if ("vibrate" in navigator) {
+          navigator.vibrate([
+            200,
+            100,
+            200,
+            100,
+            500
+          ]);
+        }
 
       } catch (error) {
-        console.error("Ошибка запуска музыки:", error);
+        console.log("Автозапуск заблокирован браузером:", error);
       }
     });
 
-    // Не позволяем кнопке остановить музыку
-    music.addEventListener("ended", function () {
-      // Если хочешь, чтобы музыка после окончания
-      // автоматически начиналась заново:
-      music.currentTime = 0;
-      music.play();
-    });
+    // Запасной вариант: если браузер заблокировал autoplay,
+    // первое касание запустит музыку
+    document.addEventListener("click", async () => {
+      try {
+        await music.play();
+
+        button.classList.add("started");
+
+        if ("vibrate" in navigator) {
+          navigator.vibrate([
+            200,
+            100,
+            200,
+            100,
+            500
+          ]);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }, { once: true });
   </script>
 
 </body>
