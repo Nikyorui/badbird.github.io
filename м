@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Моя музыка</title>
+
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #111;
+      color: white;
+      font-family: Arial, sans-serif;
+    }
+
+    button {
+      padding: 20px 40px;
+      font-size: 24px;
+      font-weight: bold;
+      border: none;
+      border-radius: 15px;
+      background: #ff0055;
+      color: white;
+      cursor: pointer;
+    }
+
+    button:active {
+      transform: scale(0.96);
+    }
+  </style>
+</head>
+
+<body>
+
+  <button id="playButton">▶ ВКЛЮЧИТЬ МУЗЫКУ</button>
+
+  <audio id="music" src="music.mp3" preload="auto"></audio>
+
+  <script>
+    const button = document.getElementById("playButton");
+    const music = document.getElementById("music");
+
+    button.addEventListener("click", async () => {
+      // Максимальная громкость внутри браузера
+      music.volume = 1.0;
+
+      try {
+        await music.play();
+        button.textContent = "⏸ ОСТАНОВИТЬ";
+
+        button.onclick = () => {
+          music.pause();
+          music.currentTime = 0;
+          button.textContent = "▶ ВКЛЮЧИТЬ МУЗЫКУ";
+
+          // Возвращаем обработчик
+          button.onclick = playMusic;
+        };
+      } catch (error) {
+        console.error("Не удалось запустить музыку:", error);
+      }
+    });
+
+    async function playMusic() {
+      music.volume = 1.0;
+
+      try {
+        await music.play();
+        button.textContent = "⏸ ОСТАНОВИТЬ";
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  </script>
+
+</body>
+</html>
