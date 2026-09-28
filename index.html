@@ -1,18 +1,32 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <title>mus.mp3</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Моя музыка</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-    <h1>Проверка музыки</h1>
+  <button id="playButton">▶ ВКЛЮЧИТЬ МУЗЫКУ</button>
 
-    <audio controls>
-        <source src="mus.mp3" type="audio/mpeg">
-        Твой браузер не поддерживает аудио.
-    </audio>
+  <audio id="music" src="mus.mp3"></audio>
+
+  <script>
+    const button = document.getElementById("playButton");
+    const music = document.getElementById("music");
+
+    button.addEventListener("click", function () {
+      if (music.paused) {
+        music.play();
+        button.textContent = "⏸ ОСТАНОВИТЬ";
+      } else {
+        music.pause();
+        button.textContent = "▶ ВКЛЮЧИТЬ МУЗЫКУ";
+      }
+    });
+  </script>
 
 </body>
 </html>
