@@ -22,28 +22,17 @@
       justify-content: center;
       align-items: center;
       background: black;
-      font-family: Arial, sans-serif;
     }
 
-    #poopButton {
+    #poopGif {
       width: 98vmin;
       height: 98vmin;
-
-      border: none;
-      border-radius: 50%;
-
-      background: red;
-      color: white;
-
-      font-size: 18vmin;
-      font-weight: bold;
-
+      object-fit: contain;
       cursor: pointer;
-
       transition: transform 1s ease;
     }
 
-    #poopButton.started {
+    #poopGif.started {
       transform: scale(1.4);
       pointer-events: none;
     }
@@ -52,28 +41,30 @@
 
 <body>
 
-  <button id="poopButton">Poop</button>
+  <img
+    id="poopGif"
+    src="poop.GIF"
+    alt="Poop"
+  >
 
   <audio
     id="music"
     src="mus.mp3"
-    autoplay
     loop
     playsinline>
   </audio>
 
   <script>
     const music = document.getElementById("music");
-    const button = document.getElementById("poopButton");
+    const gif = document.getElementById("poopGif");
 
-    // Пытаемся включить музыку сразу после открытия сайта
-    window.addEventListener("load", async () => {
+    gif.addEventListener("click", async () => {
+
       try {
         await music.play();
 
-        button.classList.add("started");
+        gif.classList.add("started");
 
-        // Вибрация, если браузер разрешает её без взаимодействия
         if ("vibrate" in navigator) {
           navigator.vibrate([
             200,
@@ -85,31 +76,10 @@
         }
 
       } catch (error) {
-        console.log("Автозапуск заблокирован браузером:", error);
+        console.error("Не удалось запустить музыку:", error);
       }
+
     });
-
-    // Запасной вариант: если браузер заблокировал autoplay,
-    // первое касание запустит музыку
-    document.addEventListener("click", async () => {
-      try {
-        await music.play();
-
-        button.classList.add("started");
-
-        if ("vibrate" in navigator) {
-          navigator.vibrate([
-            200,
-            100,
-            200,
-            100,
-            500
-          ]);
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    }, { once: true });
   </script>
 
 </body>
